@@ -123,7 +123,7 @@ namespace TaskApp.WebApi.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetProductsWithPagination(int pageNumber, int pageSize, string category, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetProductsWithPagination(int pageNumber, int pageSize, string category, string search,CancellationToken cancellationToken)
         {
             PaginationResult<ProductDto> products;
             IQueryable<Product> productList;
@@ -136,6 +136,8 @@ namespace TaskApp.WebApi.Controllers
             {
                 productList = _context.Set<Product>().AsQueryable();
             }
+
+            productList = productList.Where(p => p.Description.Contains(search));
 
             products =
                 await productList
