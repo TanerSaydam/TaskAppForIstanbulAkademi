@@ -11,7 +11,7 @@ using TaskApp.WebApi.Context;
 namespace TaskApp.WebApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230512175526_mg1")]
+    [Migration("20230512184110_mg1")]
     partial class mg1
     {
         /// <inheritdoc />
@@ -82,13 +82,13 @@ namespace TaskApp.WebApi.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("Category")
-                        .HasColumnType("longtext");
+                        .HasColumnType("VARCHAR(50)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Description")
-                        .HasColumnType("longtext");
+                        .HasColumnType("VARCHAR(100)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("tinyint(1)");
@@ -110,8 +110,9 @@ namespace TaskApp.WebApi.Migrations
             modelBuilder.Entity("TaskApp.WebApi.Models.OrderDetail", b =>
                 {
                     b.HasOne("TaskApp.WebApi.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TaskApp.WebApi.Models.Product", "Product")
                         .WithMany()
@@ -120,6 +121,11 @@ namespace TaskApp.WebApi.Migrations
                     b.Navigation("Order");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("TaskApp.WebApi.Models.Order", b =>
+                {
+                    b.Navigation("OrderDetails");
                 });
 #pragma warning restore 612, 618
         }

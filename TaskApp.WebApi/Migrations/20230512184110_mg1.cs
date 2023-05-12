@@ -37,8 +37,8 @@ namespace TaskApp.WebApi.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "varchar(255)", nullable: false),
-                    Description = table.Column<string>(type: "longtext", nullable: true),
-                    Category = table.Column<string>(type: "longtext", nullable: true),
+                    Description = table.Column<string>(type: "VARCHAR(100)", nullable: true),
+                    Category = table.Column<string>(type: "VARCHAR(50)", nullable: true),
                     Unit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     UnitPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Status = table.Column<bool>(type: "tinyint(1)", nullable: false),
@@ -68,7 +68,8 @@ namespace TaskApp.WebApi.Migrations
                         name: "FK_OrderDetails_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderDetails_Products_ProductId",
                         column: x => x.ProductId,

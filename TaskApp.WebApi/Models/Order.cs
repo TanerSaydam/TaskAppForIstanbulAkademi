@@ -8,4 +8,6 @@ public sealed class Order : Entity
     public string CustomerEmail { get; set; }
     public string CustomerGSM { get; set; }
     public decimal TotalAmount { get; set; }
+
+    public ICollection<OrderDetail> OrderDetails { get; set; }
 }
