@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 using TaskApp.WebApi.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 #endregion
 
+#region AutoMapper
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+#endregion
+
+#region Cache
+builder.Services.AddMemoryCache();
+builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect("localhost"));
+#endregion
 
 var app = builder.Build();
 
